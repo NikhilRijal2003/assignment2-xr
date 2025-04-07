@@ -17,6 +17,23 @@ window.addEventListener('DOMContentLoaded', async function(){
     const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 1.0;
 
+        // Floor with Texture
+        const floor = BABYLON.MeshBuilder.CreateGround("floor", { width: 20, height: 20 }, scene);
+        const floorMat = new BABYLON.StandardMaterial("floorMat", scene);
+        floorMat.diffuseTexture = new BABYLON.Texture("Assets/Floor.jpg", scene); 
+        floorMat.diffuseTexture.uScale = 4;
+        floorMat.diffuseTexture.vScale = 4;
+        floor.material = floorMat;
+    
+        // Ceiling
+        const ceiling = BABYLON.MeshBuilder.CreateGround("ceiling", { width: 20, height: 20 }, scene);
+        ceiling.rotation.x = Math.PI;
+        ceiling.position.y = 6;
+        const ceilingMat = new BABYLON.StandardMaterial("ceilingMat", scene);
+        ceilingMat.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9);
+        ceiling.material = ceilingMat;
+    
+
     // Render loop
     engine.runRenderLoop(() => scene.render());
     window.addEventListener('resize', () => engine.resize());
