@@ -54,6 +54,28 @@ window.addEventListener('DOMContentLoaded', async function(){
 
 
 
+        // Table
+        const table = BABYLON.MeshBuilder.CreateBox("table", { width:3, height:0.3, depth:2 }, scene);
+        table.position.set(0, 0.15, -3);
+        const tableMat = new BABYLON.StandardMaterial("tableMat", scene);
+        tableMat.diffuseColor = new BABYLON.Color3(0.6, 0.4, 0.2);
+        table.material = tableMat;
+    
+        // Fire Extinguisher (Simple Cylinder)
+        const extinguisher = BABYLON.MeshBuilder.CreateCylinder("extinguisher", {height:1, diameter:0.3}, scene);
+        extinguisher.position.set(2, 0.5, -2);
+        const extinguisherMat = new BABYLON.StandardMaterial("extinguisherMat", scene);
+        extinguisherMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
+        extinguisher.material = extinguisherMat;
+    
+        // Label (Mentor sphere placeholder)
+        const mentor = BABYLON.MeshBuilder.CreateSphere("mentor", { diameter: 0.4 }, scene);
+        mentor.position.set(3, 0.5, -5);
+        const mentorMat = new BABYLON.StandardMaterial("mentorMat", scene);
+        mentorMat.diffuseColor = new BABYLON.Color3(0.9, 0.4, 0.4);
+        mentor.material = mentorMat;
+    
+
     // Render loop
     engine.runRenderLoop(() => scene.render());
     window.addEventListener('resize', () => engine.resize());
