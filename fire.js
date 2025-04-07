@@ -34,6 +34,26 @@ window.addEventListener('DOMContentLoaded', async function(){
         ceiling.material = ceilingMat;
     
 
+            // Walls
+    const wallMat = new BABYLON.StandardMaterial("wallMat", scene);
+    wallMat.diffuseColor = new BABYLON.Color3(0.95, 0.95, 0.95);
+
+    const wallPositions = [
+        {x:0, y:3, z:-10, ry:0},
+        {x:0, y:3, z:10, ry:0},
+        {x:-10, y:3, z:0, ry:Math.PI/2},
+        {x:10, y:3, z:0, ry:Math.PI/2}
+    ];
+
+    wallPositions.forEach(pos => {
+        const wall = BABYLON.MeshBuilder.CreatePlane("wall", {width:20, height:6}, scene);
+        wall.position.set(pos.x, pos.y, pos.z);
+        wall.rotation.y = pos.ry;
+        wall.material = wallMat;
+    });
+
+
+
     // Render loop
     engine.runRenderLoop(() => scene.render());
     window.addEventListener('resize', () => engine.resize());
