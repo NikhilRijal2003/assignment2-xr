@@ -244,24 +244,11 @@ window.addEventListener('DOMContentLoaded', async function () {
         );
     }));
 
-      // xr support
-    const xr = await scene.createDefaultXRExperienceAsync({
-        floorMeshes: [floor] 
-      });
-      
-      const features = xr.baseExperience.featuresManager;
-      
-      // Enable teleportation
-      features.enableFeature(BABYLON.WebXRFeatureName.TELEPORTATION, 'stable', {
-        floorMeshes: [floor],
-        xrInput: xr.input
-      });
-      
-      // Enable hand tracking (if supported)
-      features.enableFeature(BABYLON.WebXRFeatureName.HAND_TRACKING, 'stable', {
-        xrInput: xr.input,
-        enablePhysics: false
-      });
+      // ---------- XR Setup ----------
+      const xr = await scene.createDefaultXRExperienceAsync({
+        uiOptions: { sessionMode: "immersive-ar", referenceSpaceType: "local-floor" },
+        optionalFeatures: true
+    });
       
 
     //Render loop
