@@ -3,7 +3,7 @@ window.addEventListener('DOMContentLoaded', async function () {
     const engine = new BABYLON.Engine(canvas, true, { antialias: true });
     const scene = new BABYLON.Scene(engine);
 
-   // Background Color
+    // Background Color
     scene.clearColor = new BABYLON.Color3(0.9, 0.95, 1);
     scene.imageProcessingConfiguration.contrast = 1.6;
     scene.imageProcessingConfiguration.exposure = 1.2;
@@ -191,7 +191,58 @@ window.addEventListener('DOMContentLoaded', async function () {
         })
     );
 
+    // 🪑 Mentor Chair
+    const chairSeat = BABYLON.MeshBuilder.CreateBox("chairSeat", {
+        width: 0.6,
+        height: 0.1,
+        depth: 0.6
+    }, scene);
+    chairSeat.position.set(3, 0.5, -5);
 
+    const chairBack = BABYLON.MeshBuilder.CreateBox("chairBack", {
+        width: 0.6,
+        height: 0.6,
+        depth: 0.05
+    }, scene);
+    chairBack.position.set(3, 0.85, -5.25);
+
+    // Legs
+    const legMaterial = new BABYLON.StandardMaterial("legMat", scene);
+    legMaterial.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+    const legPositions = [
+        [2.75, 0.25, -4.75],
+        [3.25, 0.25, -4.75],
+        [2.75, 0.25, -5.25],
+        [3.25, 0.25, -5.25],
+    ];
+    legPositions.forEach((pos, index) => {
+        const leg = BABYLON.MeshBuilder.CreateCylinder(`chairLeg${index}`, {
+            height: 0.5,
+            diameter: 0.05
+        }, scene);
+        leg.position.set(...pos);
+        leg.material = legMaterial;
+    });
+
+    // Chair Material
+    const chairMat = new BABYLON.StandardMaterial("chairMat", scene);
+    chairMat.diffuseColor = new BABYLON.Color3(0.6, 0.3, 0.2);
+    chairSeat.material = chairMat;
+    chairBack.material = chairMat;
+
+    // ✅ Make clickable + Add action
+    chairSeat.isPickable = true;
+    chairSeat.actionManager = new BABYLON.ActionManager(scene);
+    chairSeat.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, () => {
+        alert(
+            "🧯 How to Use a Fire Extinguisher (P.A.S.S.):\n\n" +
+            "⿡ P - Pull the pin\n" +
+            "⿢ A - Aim at the base of the fire\n" +
+            "⿣ S - Squeeze the handle\n" +
+            "⿤ S - Sweep side to side\n\n" +
+            "✅ Be calm and stay safe!"
+        );
+    }));
 
 
     //Render loop
